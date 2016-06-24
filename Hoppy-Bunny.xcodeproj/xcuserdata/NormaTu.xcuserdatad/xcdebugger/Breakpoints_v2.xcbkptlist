@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Hoppy-Bunny/GameScene.swift"
-            timestampString = "488499268.826698"
+            timestampString = "488502151.058357"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "41"
-            endingLineNumber = "41"
+            startingLineNumber = "44"
+            endingLineNumber = "44"
             landmarkName = "didMoveToView(_:)"
             landmarkType = "5">
          </BreakpointContent>

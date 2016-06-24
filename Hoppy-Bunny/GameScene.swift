@@ -14,6 +14,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var sinceTouch : CFTimeInterval = 0
     var spawnTimer: CFTimeInterval = 0
     var obstacleLayer: SKNode!
+    var scoreLabel: SKLabelNode! //score
+    var points = 0
     var gameState: GameSceneState = .Active /* Game management */
     var buttonRestart: MSButtonNode! /* UI Connections */
     let fixedDelta: CFTimeInterval = 1.0/60.0 /* 60 FPS */
@@ -40,6 +42,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         /* Set UI connections */
         buttonRestart = self.childNodeWithName("buttonRestart") as! MSButtonNode
         
+        scoreLabel = self.childNodeWithName("scoreLabel") as! SKLabelNode
+        
         /* Setup restart button selection handler */
         buttonRestart.selectedHandler = {
             
@@ -58,6 +62,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         /* Hide restart button */
         buttonRestart.state = .Hidden
+        
+        /* Reset Score label */
+        scoreLabel.text = String(points)
     }
     
     func didBeginContact(contact: SKPhysicsContact) {
@@ -71,6 +78,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         */
         
         /* Hero touches anything, game over */
+
+        /* Get references to bodies involved in collision */
+        let contactA:SKPhysicsBody = contact.bodyA
+        let contactB:SKPhysicsBody = contact.bodyB
+        
+        /* Get references to the physics body parent nodes */
+        let nodeA = contactA.node!
+        let nodeB = contactB.node!
+        
+        print(nodeA.name, nodeB.name)
+        
+        /* Did our hero pass through the 'goal'? */
+        if nodeA.name == "goal" || nodeB.name == "goal" {
+            
+            /* Increment points */
+            points += 1
+            
+            /* Update score label */
+            scoreLabel.text = String(points)
+            
+            /* We can return now */
+            return
+        }
         
         /* Change game state to game over */
         gameState = .GameOver
@@ -109,6 +139,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         /* Show restart button */
         buttonRestart.state = .Active
+        
+        scoreLabel = self.childNodeWithName("scoreLabel") as! SKLabelNode
+
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
