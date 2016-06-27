@@ -87,7 +87,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let nodeA = contactA.node!
         let nodeB = contactB.node!
         
-        print(nodeA.name, nodeB.name)
+        //Debugs what collides with what: print(nodeA.name, nodeB.name)
         
         /* Did our hero pass through the 'goal'? */
         if nodeA.name == "goal" || nodeB.name == "goal" {
@@ -97,6 +97,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             /* Update score label */
             scoreLabel.text = String(points)
+            
+            /* Play SFX */
+            let pointSFX = SKAction.playSoundFileNamed("sfx_goal", waitForCompletion: false)
+            self.runAction(pointSFX)
             
             /* We can return now */
             return
